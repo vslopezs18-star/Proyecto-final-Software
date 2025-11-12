@@ -9,4 +9,9 @@
 
 Sueldo=float(input("Ingrese la cantidad de dinero que usted posee: "))
 print("La distribucion esta dada por: \n 50% para necesidades esenciales, como vivienda, alimentación y transporte. \n 30% para deseos o gastos personales, como entretenimiento o compras no esenciales. \n 20% para ahorro o pago de deudas.")
-eleccion=int(input("Digite la opcion a elegir (1-3): "))
+
+distribucion=True
+while distribucion is True:
+    eleccion=int(input("Digite la opcion a elegir (1-3): "))
+    if eleccion == 1:
+        print()
