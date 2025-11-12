@@ -20,12 +20,12 @@ while distribucion is True:
     if sección == 4:
         distribucion = False
     elif sección == 1:
-            eleccion=int(input("1.Agregar categorías, 2.Consular categorías, 3.Modificar categorías, 4. Borrar categorías "))
-            if eleccion == 1:
+            elección = int(input(" \n 1.Agregar categorías, \n 2.Consular categorías, \n 3.Modificar categorías, \n 4. Borrar categorías "))
+            if elección == 1:
                 Necesidades.append("Ingrese la categoría a agregar: ")
-            elif eleccion == 2:
+            elif elección == 2:
                 print(Necesidades)
-            elif eleccion == 3:
+            elif elección == 3:
             # nuevo = input("Digite el nombre nuevo: ")
                 if len(Necesidades) == 0:
                  print("Actualmente no hay categorías en Necesidades")
