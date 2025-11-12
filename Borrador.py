@@ -14,6 +14,15 @@ Necesidades = []
 Deseos = []
 Ahorro = []
 
+presupuesto_necesidades = Sueldo * 0.50
+presupuesto_deseos = Sueldo * 0.30
+presupuesto_ahorro = Sueldo * 0.20
+
+print(f"\nTu presupuesto se distribuye así:")
+print(f"Necesidades: ${presupuesto_necesidades:.2f}")
+print(f"Deseos: ${presupuesto_deseos:.2f}")
+print(f"Ahorro: ${presupuesto_ahorro:.2f}\n")
+
 distribucion=True
 while distribucion is True:
     sección = int(input("Secciones: \n 1. Necesidades Esenciales (ej. vivienda, comida, transporte), \n 2. Deseos (entretenimiento, gastos personales). \n 3. Ahorro \n 4. Salir \n Digite la sección a la que desea entrar: "))
@@ -22,7 +31,8 @@ while distribucion is True:
     elif sección == 1:
             elección = int(input(" \n 1.Agregar categorías, \n 2.Consular categorías, \n 3.Modificar categorías, \n 4. Borrar categorías "))
             if elección == 1:
-                Necesidades.append("Ingrese la categoría a agregar: ")
+                categoría = "Ingrese la categoría a agregar: "
+                Necesidades.append()
             elif elección == 2:
                 print(Necesidades)
             elif elección == 3:
