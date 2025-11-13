@@ -3,11 +3,21 @@
 #•	30% para deseos o gastos personales, como entretenimiento o compras no esenciales.
 #•	20% para ahorro o pago de deudas.
 
-#Paso numero uno: Preguntarle al cliente/usuario, la cantidad de dinera que el posee 
+#Paso numero uno: Preguntarle al cliente/usuario, la cantidad de dinera que el posee con una función
 #Paso numero dos: Dividir esos gastos en el sistema
 #Paso numero tres: Definir en que distribuira exactamente su dinero en cada seccion 
 
-print("Bienvenido/a a PapoiMoney \n Descubre la forma más inteligente y sencilla de manejar tu dinero con el sistema 50-30-20: \n 50% para Necesidades Esenciales (vivienda, comida, transporte). \n 30% para Deseos (entretenimiento, gastos personales). \n 20% para Ahorro. \n Automatiza tu presupuesto, evita gastos innecesarios y toma el control de tu bienestar financiero. ¡Comencemos a planificar!")
+def bienvenida():
+    """Esta función da la bienvenida a la app"""
+    print("Bienvenido/a a PapoiMoney")
+    print("Descubre la forma más inteligente y sencilla de manejar tu dinero con el sistema 50-30-20:") 
+    print(f"\t50% para Necesidades Esenciales (vivienda, comida, transporte.") 
+    print(f"\t30% para Deseos (entretenimiento, gastos personales.")
+    print(f"\t20% para Ahorro.")
+    print(f"\tAutomatiza tu presupuesto, evita gastos innecesarios y toma el control de tu bienestar financiero. ¡Comencemos a planificar!")
+
+bienvenida()
+
 Sueldo = float(input("Para empezar ingrese la cantidad de dinero que posee: $"))
 
 Necesidades = []
@@ -18,10 +28,10 @@ presupuesto_necesidades = Sueldo * 0.50
 presupuesto_deseos = Sueldo * 0.30
 presupuesto_ahorro = Sueldo * 0.20
 
-print(f"\nTu presupuesto se distribuye así:")
+""""print(f"\nTu presupuesto se distribuye así:")
 print(f"Necesidades: ${presupuesto_necesidades:.2f}")
 print(f"Deseos: ${presupuesto_deseos:.2f}")
-print(f"Ahorro: ${presupuesto_ahorro:.2f}\n")
+print(f"Ahorro: ${presupuesto_ahorro:.2f}\n")"""
 
 distribucion=True
 while distribucion is True:
@@ -29,19 +39,23 @@ while distribucion is True:
     if sección == 4:
         distribucion = False
     elif sección == 1:
-            elección = int(input(" \n 1.Agregar categorías, \n 2.Consular categorías, \n 3.Modificar categorías, \n 4. Borrar categorías "))
-            if elección == 1:
-                categoría = "Ingrese la categoría a agregar: "
-                Necesidades.append()
-            elif elección == 2:
+            elección = (input(" \n a.Agregar categorías \n b.Consular categorías \n c.Modificar categorías \n d. Borrar categorías "))
+            if elección == "a":
+                categoría = input("Ingrese la categoría a agregar: ")
+                Necesidades.append(categoría)
+            elif elección == "b":
                 print(Necesidades)
             elif elección == 3:
-            # nuevo = input("Digite el nombre nuevo: ")
                 if len(Necesidades) == 0:
-                 print("Actualmente no hay categorías en Necesidades")
+                    print("Actualmente no hay categorías creadas en Necesidades por el momento.")
             else:
                 for v in range(len(Necesidades)):
-                    print(f"Actualmente hay {len(Necesidades)} en Necesidades")
+                    print(f"{platillo[v].capitalize()}: ${precios[v]:.2f}")nuevo = input("Digite el nombre nuevo: ")
+                if len(Necesidades) == 0:
+                 print("Actualmente no hay categorías en Necesidades")
+                else:
+                    for v in range(len(Necesidades)):
+                        print(f"Actualmente hay {len(Necesidades)} en Necesidades")
         
 """while menu_iniciado: 
     opción = int(input("1.Agregar, 2.Consular, 3.Modificar, 4. Borrar, 5. Salir"))
