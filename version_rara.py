@@ -11,7 +11,6 @@ def bienvenida():
     print("  🏦 20% para Ahorro")
     print("\nAutomatiza tu presupuesto, evita gastos innecesarios y toma el")
     print("control de tu bienestar financiero. ¡Comencemos a planificar!")
-    print("=" * 70 + "\n")
 
 def mostrar_presupuesto(sueldo, necesidades_dict, deseos_dict, ahorro_dict):
     """Muestra el resumen del presupuesto y gastos actuales"""

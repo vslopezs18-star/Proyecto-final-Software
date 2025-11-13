@@ -50,7 +50,7 @@ while distribucion is True:
                     print("Actualmente no hay categorías creadas en Necesidades por el momento.")
             else:
                 for v in range(len(Necesidades)):
-                    print(f"{platillo[v].capitalize()}: ${precios[v]:.2f}")nuevo = input("Digite el nombre nuevo: ")
+                    print(f"{[v].capitalize()}: ${[v]:.2f}")= input("Digite el nombre nuevo: ")
                 if len(Necesidades) == 0:
                  print("Actualmente no hay categorías en Necesidades")
                 else:
