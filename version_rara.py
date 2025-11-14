@@ -172,18 +172,18 @@ def modificar_gasto(categoria_dict, nombre_categoria):
     nuevo_concepto = input("Ingrese el nuevo concepto (Enter para mantener): ").strip()
     nuevo_monto = input("Ingrese el nuevo monto (Enter para mantener): $").strip()
     
-    # Modificar el concepto si el usuario escribió algo
+    # Modificamos el concepto si el usuario escribió algo
     if nuevo_concepto != "":
         categoria_dict[nuevo_concepto] = categoria_dict.pop(concepto_viejo)
         concepto_viejo = nuevo_concepto
     
     # Modificar el monto si el usuario escribió algo
     if nuevo_monto != "":
-        # Validar que el monto sea un número válido
+        # Corroboramos que el monto sea un número válido
         monto_valido = False
         
         while monto_valido == False:
-            # Contar cuántos puntos tiene
+            # Contamos cuántos puntos tiene
             cantidad_puntos = 0
             pos_punto = 0
             
@@ -192,22 +192,22 @@ def modificar_gasto(categoria_dict, nombre_categoria):
                     cantidad_puntos = cantidad_puntos + 1
                 pos_punto = pos_punto + 1
             
-            # Verificar si tiene más de un punto
+            # Verificamos si tiene más de un punto
             if cantidad_puntos > 1:
                 nuevo_monto = input("⚠️  Monto inválido. Ingrese el nuevo monto: $").strip()
             else:
-                # Convertir el texto a lista para poder usar remove
+                # Convertimos el texto a lista para poder usar remove
                 lista_caracteres = list(nuevo_monto)
                 
-                # Quitar el punto si existe (usando remove)
+                # Quitamos el punto en dado caso existe
                 if '.' in lista_caracteres:
                     lista_caracteres.remove('.')
                 
-                # Quitar el signo negativo si está al inicio
+                # Quitamos el signo negativo si está al inicio
                 if len(lista_caracteres) > 0 and lista_caracteres[0] == '-':
                     lista_caracteres.remove('-')
                 
-                # Verificar que todos sean dígitos
+                # Verificamos que todos sean dígitos
                 if len(lista_caracteres) > 0:
                     todos_digitos = True
                     pos = 0
