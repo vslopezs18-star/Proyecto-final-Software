@@ -108,22 +108,22 @@ def consultar_gastos(categoria_dict, nombre_categoria):
     if len(categoria_dict) == 0:
         print(f"\n📋 No hay gastos registrados en {nombre_categoria}.")
     else:
-        print(f"\n{'='*50}")
+        print("\n")
         print(f"📋 GASTOS EN {nombre_categoria.upper()}")
-        print(f"{'='*50}")
+        print("\n")
         total = 0
         for i, (concepto, monto) in enumerate(categoria_dict.items(), 1):
             print(f"{i}. {concepto.capitalize()}: ${monto:.2f}")
             total += monto
-        print(f"{'-'*50}")
-        print(f"{'TOTAL:':<30} ${total:.2f}")
-        print(f"{'='*50}\n")
+        print("\n")
+        print(f"{"TOTAL:"} ${total:.2f}")
+        print("\n")
 
 def modificar_gasto(categoria_dict, nombre_categoria):
     """Modifica un gasto existente"""
     if len(categoria_dict) == 0:
         print(f"\n⚠️  No hay gastos en {nombre_categoria} para modificar.")
-        return
+        return 
     
     consultar_gastos(categoria_dict, nombre_categoria)
     
@@ -132,27 +132,100 @@ def modificar_gasto(categoria_dict, nombre_categoria):
     for i, concepto in enumerate(conceptos, 1):
         print(f"{i}. {concepto}")
     
-    try:
-        indice = int(input("\nDigite el número del gasto a modificar: ")) - 1
-        if 0 <= indice < len(conceptos):
-            concepto_viejo = conceptos[indice]
-            print(f"\nModificando: {concepto_viejo} (${categoria_dict[concepto_viejo]:.2f})")
-            
-            nuevo_concepto = input("Ingrese el nuevo concepto (Enter para mantener): ").strip()
-            nuevo_monto = input("Ingrese el nuevo monto (Enter para mantener): $").strip()
-            
-            if nuevo_concepto:
-                categoria_dict[nuevo_concepto] = categoria_dict.pop(concepto_viejo)
-                concepto_viejo = nuevo_concepto
-            
-            if nuevo_monto:
-                categoria_dict[concepto_viejo] = float(nuevo_monto)
-            
-            print(f"✅ Gasto modificado exitosamente.")
+    # Validamos el índice
+    indice_valido = False
+    
+    while indice_valido == False:
+        indice_texto = input("\nDigite el número del gasto a modificar: ").strip()
+        
+        # Verificamos si está vacío
+        if indice_texto == "":
+            print("⚠️  Entrada inválida.")
         else:
-            print("⚠️  Número inválido.")
-    except (ValueError, IndexError):
-        print("⚠️  Entrada inválida.")
+            # Verificamos si todos los caracteres son dígitos
+            es_numero = True
+            posicion = 0
+            
+            while posicion < len(indice_texto) and es_numero == True:
+                caracter = indice_texto[posicion]
+                
+                if caracter not in '0123456789':
+                    es_numero = False
+                
+                posicion = posicion + 1
+            
+            if es_numero == True:
+                indice = int(indice_texto) - 1
+                
+                # Verificamos si el índice está en el rango válido
+                if 0 <= indice < len(conceptos):
+                    indice_valido = True
+                else:
+                    print("⚠️  Número inválido.")
+            else:
+                print("⚠️  Entrada inválida.")
+    
+    # Ahora modificamos el gasto
+    concepto_viejo = conceptos[indice]
+    print(f"\nPor lo tanto el {concepto_viejo} pasa a ser ${categoria_dict[concepto_viejo]:.2f}")
+    
+    nuevo_concepto = input("Ingrese el nuevo concepto (Enter para mantener): ").strip()
+    nuevo_monto = input("Ingrese el nuevo monto (Enter para mantener): $").strip()
+    
+    # Modificar el concepto si el usuario escribió algo
+    if nuevo_concepto != "":
+        categoria_dict[nuevo_concepto] = categoria_dict.pop(concepto_viejo)
+        concepto_viejo = nuevo_concepto
+    
+    # Modificar el monto si el usuario escribió algo
+    if nuevo_monto != "":
+        # Validar que el monto sea un número válido
+        monto_valido = False
+        
+        while monto_valido == False:
+            # Contar cuántos puntos tiene
+            cantidad_puntos = 0
+            pos_punto = 0
+            
+            while pos_punto < len(nuevo_monto):
+                if nuevo_monto[pos_punto] == '.':
+                    cantidad_puntos = cantidad_puntos + 1
+                pos_punto = pos_punto + 1
+            
+            # Verificar si tiene más de un punto
+            if cantidad_puntos > 1:
+                nuevo_monto = input("⚠️  Monto inválido. Ingrese el nuevo monto: $").strip()
+            else:
+                # Convertir el texto a lista para poder usar remove
+                lista_caracteres = list(nuevo_monto)
+                
+                # Quitar el punto si existe (usando remove)
+                if '.' in lista_caracteres:
+                    lista_caracteres.remove('.')
+                
+                # Quitar el signo negativo si está al inicio
+                if len(lista_caracteres) > 0 and lista_caracteres[0] == '-':
+                    lista_caracteres.remove('-')
+                
+                # Verificar que todos sean dígitos
+                if len(lista_caracteres) > 0:
+                    todos_digitos = True
+                    pos = 0
+                    
+                    while pos < len(lista_caracteres) and todos_digitos == True:
+                        if lista_caracteres[pos] not in '0123456789':
+                            todos_digitos = False
+                        pos = pos + 1
+                    
+                    if todos_digitos == True:
+                        categoria_dict[concepto_viejo] = float(nuevo_monto)
+                        monto_valido = True
+                    else:
+                        nuevo_monto = input("⚠️  Monto inválido. Ingrese el nuevo monto: $").strip()
+                else:
+                    nuevo_monto = input("⚠️  Monto inválido. Ingrese el nuevo monto: $").strip()
+    
+    print(f"✅ Gasto modificado exitosamente.")
 
 def borrar_gasto(categoria_dict, nombre_categoria):
     """Borra un gasto de una categoría"""
