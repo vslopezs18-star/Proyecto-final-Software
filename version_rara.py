@@ -23,49 +23,85 @@ def mostrar_presupuesto(sueldo, necesidades_dict, deseos_dict, ahorro_dict):
     total_deseos = sum(deseos_dict.values())
     total_ahorro = sum(ahorro_dict.values())
     
-    print("\n" + "=" * 70)
+    print("\n")
     print(" " * 25 + "RESUMEN DE PRESUPUESTO")
-    print("=" * 70)
     print(f"\n💵 Ingreso Total: ${sueldo:.2f}\n")
     
     print(f"{'Categoría':<25} {'Presupuesto':<15} {'Gastado':<15} {'Disponible':<15}")
-    print("-" * 70)
+
     print(f"{'Necesidades (50%)':<25} ${presupuesto_necesidades:<14.2f} ${total_necesidades:<14.2f} ${presupuesto_necesidades - total_necesidades:<14.2f}")
     print(f"{'Deseos (30%)':<25} ${presupuesto_deseos:<14.2f} ${total_deseos:<14.2f} ${presupuesto_deseos - total_deseos:<14.2f}")
     print(f"{'Ahorro (20%)':<25} ${presupuesto_ahorro:<14.2f} ${total_ahorro:<14.2f} ${presupuesto_ahorro - total_ahorro:<14.2f}")
-    print("=" * 70 + "\n")
+    print("\n")
 
 def agregar_gasto(categoria_dict, nombre_categoria, presupuesto_max, total_gastado):
     """Agrega un gasto a una categoría específica"""
     concepto = input(f"\nIngrese el concepto del gasto en {nombre_categoria}: ").strip()
     
-    try:
-        monto = float(input(f"Ingrese el monto para '{concepto}': $"))
+    # Validar el monto con bucle while
+    monto_valido = False
+    
+    while monto_valido == False:
+        monto_texto = input(f"Ingrese el monto para '{concepto}': $").strip()
         
-        if monto <= 0:
-            print("⚠️  El monto debe ser mayor a 0.")
-            return total_gastado
-        
-        nuevo_total = total_gastado + monto
-        
-        if nuevo_total > presupuesto_max:
-            print(f"\n⚠️  ADVERTENCIA: Este gasto excede tu presupuesto de {nombre_categoria}!")
-            print(f"   Presupuesto: ${presupuesto_max:.2f}")
-            print(f"   Total gastado: ${nuevo_total:.2f}")
-            print(f"   Exceso: ${nuevo_total - presupuesto_max:.2f}")
+        # Verificar si el texto está vacío
+        if monto_texto == "":
+            print("⚠️  Por favor ingrese un monto válido.")
+        else:
+            # Verificar caracteres válidos
+            es_numero = True
+            tiene_punto = False
+            posicion = 0
             
-            confirmacion = input("\n¿Deseas agregar este gasto de todas formas? (s/n): ").lower()
-            if confirmacion != 's':
-                print("✅ Gasto no agregado.")
-                return total_gastado
-        
-        categoria_dict[concepto] = monto
-        print(f"✅ Gasto '{concepto}' de ${monto:.2f} agregado exitosamente a {nombre_categoria}.")
-        return nuevo_total
-        
-    except ValueError:
-        print("⚠️  Por favor ingrese un monto válido.")
+            while posicion < len(monto_texto) and es_numero == True:
+                caracter = monto_texto[posicion]
+                
+                # Permitir signo negativo solo al inicio
+                if caracter == '-' and posicion == 0:
+                    # No pasa nada, porque es válido
+                    es_numero = True
+                # Permitir solo un punto decimal
+                elif caracter == '.':
+                    if tiene_punto == True:
+                        es_numero = False
+                    else:
+                        tiene_punto = True
+                # Verificamos si es dígito
+                elif caracter in '0123456789':
+                    # Es válido
+                    es_numero = True
+                else:
+                    es_numero = False
+                
+                posicion = posicion + 1 
+            
+            if es_numero == True:
+                monto = float(monto_texto)
+                monto_valido = True
+            else:
+                print("⚠️  Por favor ingrese un monto válido.")
+    
+    # Validar que el monto sea mayor a 0
+    if monto <= 0:
+        print("⚠️  El monto debe ser mayor a 0.")
         return total_gastado
+    
+    nuevo_total = total_gastado + monto
+    
+    if nuevo_total > presupuesto_max:
+        print(f"\n⚠️  ADVERTENCIA: Este gasto excede tu presupuesto de {nombre_categoria}!")
+        print(f"   Presupuesto: ${presupuesto_max:.2f}")
+        print(f"   Total gastado: ${nuevo_total:.2f}")
+        print(f"   Exceso: ${nuevo_total - presupuesto_max:.2f}")
+        
+        confirmacion = input("\n¿Deseas agregar este gasto de todas formas? (s/n): ").lower()
+        if confirmacion != 's':
+            print("✅ Gasto no agregado.")
+            return total_gastado
+    
+    categoria_dict[concepto] = monto
+    print(f"✅ Gasto '{concepto}' de ${monto:.2f} agregado exitosamente a {nombre_categoria}.")
+    return nuevo_total
 
 def consultar_gastos(categoria_dict, nombre_categoria):
     """Consulta y muestra todos los gastos de una categoría"""
