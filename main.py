@@ -1,15 +1,8 @@
-from 
+from submenú import bienvenida, menu_categoria
+from funciones import mostrar_presupuesto
 
-def bienvenida():
-    """Esta función da la bienvenida a la app"""
-    print("BIENVENIDO/A A PAPOIMONEY")
-    print("\nDescubre la forma más inteligente y sencilla de manejar tu dinero")
-    print("con el sistema 50-30-20:\n")
-    print("  💰 50% para Necesidades Esenciales (vivienda, comida, transporte)")
-    print("  🎯 30% para Deseos (entretenimiento, gastos personales)")
-    print("  🏦 20% para Ahorro")
-    print("\nAutomatiza tu presupuesto, evita gastos innecesarios y toma el")
-    print("control de tu bienestar financiero. ¡Comencemos a planificar!")
+# PapoiMoney - Nuestra aplicación es de gestión de presupuesto con sistema 50-30-20
+# Sistema: 50% Necesidades, 30% Deseos, 20% Ahorro
 
 def main():
     """Función principal de la aplicación"""
@@ -83,12 +76,13 @@ def main():
         mostrar_presupuesto(sueldo, necesidades, deseos, ahorro)
     
         print("MENÚ PRINCIPAL")
-        print("\n")
+        print("=" * 70)
         print("1. 💰 Necesidades Esenciales (vivienda, comida, transporte)")
         print("2. 🎯 Deseos (entretenimiento, gastos personales)")
         print("3. 🏦 Ahorro")
         print("4. 📊 Ver resumen completo")
         print("5. 🚪 Salir")
+        print("=" * 70)
     
         seccion_valida = False
     
@@ -96,25 +90,22 @@ def main():
             seccion_texto = input("\nDigite la sección a la que desea entrar: ").strip()
         
         # Verificar si está vacío
-        if seccion_texto == "":
-            print("⚠️  Por favor ingrese un número válido.")
-        else:
+            if seccion_texto == "":
+                print("⚠️  Por favor ingrese un número válido.")
+            else:
             # Verificar si todos los caracteres son dígitos
-            es_numero = True
-            posicion = 0
+                es_numero = True
+                posicion = 0
             
             while posicion < len(seccion_texto) and es_numero == True:
-                caracter = seccion_texto[posicion]
-                
-                if caracter not in '0123456789':
+                if seccion_texto[posicion] not in '0123456789':
                     es_numero = False
-                
                 posicion = posicion + 1
             
             if es_numero == True:
                 seccion = int(seccion_texto)
                 
-                # Verificar si está en el rango válido
+                # Verificar si está en el rango válido (1-5)
                 if 1 <= seccion <= 5:
                     seccion_valida = True
                 else:
@@ -122,23 +113,26 @@ def main():
             else:
                 print("⚠️  Por favor ingrese un número válido.")
     
-            # Ejecutar la opción elegida
-        if seccion == 5:
-            print("\n" + "=" * 70)
-            print("✅ Gracias por usar PapoiMoney. ¡Hasta pronto!")
-            print("=" * 70)
-            break
-        elif seccion == 1:
+    # Ejecutar la opción seleccionada
+            if seccion == 5:
+                print("\n" + "=" * 70)
+                print("✅ Gracias por usar PapoiMoney. ¡Hasta pronto!")
+                print("=" * 70)
+                break
+    
+        if seccion == 1:
             menu_categoria("Necesidades", necesidades, sueldo)
-        elif seccion == 2:
-            menu_categoria("Deseos", deseos, sueldo)
-        elif seccion == 3:
-            menu_categoria("Ahorro", ahorro, sueldo)
-        elif seccion == 4:
-        # Cuando el usuario elige 4, simplemente vuelve al inicio del bucle
-        # y mostrar_presupuesto() se ejecuta automáticamente
-            print("\n✅ Mostrando resumen completo...")
 
+        if seccion == 2:
+            menu_categoria("Deseos", deseos, sueldo)
+    
+        if seccion == 3:
+            menu_categoria("Ahorro", ahorro, sueldo)
+    
+        if seccion == 4:
+        # El resumen ya se muestra al inicio del bucle
+        # El bucle volverá al inicio y mostrará el resumen automáticamente
+            print("")
 # Ejecutamos la aplicación
 if __name__ == "__main__":
     main()
