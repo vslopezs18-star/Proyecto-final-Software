@@ -339,16 +339,46 @@ def borrar_gasto(categoria_dict, nombre_categoria):
     consultar_gastos(categoria_dict, nombre_categoria)
     
     conceptos = list(categoria_dict.keys())
-    try:
-        indice = int(input("\nDigite el número del gasto a borrar: ")) - 1
-        if 0 <= indice < len(conceptos):
-            concepto = conceptos[indice]
-            monto = categoria_dict.pop(concepto)
-            print(f"✅ Gasto '{concepto}' de ${monto:.2f} eliminado exitosamente.")
+    
+    # Validamos el índice
+    indice_valido = False
+    
+    while indice_valido == False:
+        indice_texto = input("\nDigite el número del gasto a borrar: ").strip()
+        
+        # Verificamos si está vacío
+        if indice_texto == "":
+            print("⚠️  Entrada inválida.")
         else:
-            print("⚠️  Número inválido.")
-    except (ValueError, IndexError):
-        print("⚠️  Entrada inválida.")
+            # Vemos si todos los caracteres son dígitos
+            es_numero = True
+            posicion = 0
+            
+            while posicion < len(indice_texto) and es_numero == True:
+                caracter = indice_texto[posicion]
+                
+                if caracter not in '0123456789':
+                    es_numero = False
+                
+                posicion = posicion + 1
+            
+            if es_numero == True:
+                indice = int(indice_texto) - 1
+                
+                # Por último vemos si el índice está en el rango válido
+                if 0 <= indice < len(conceptos):
+                    indice_valido = True
+                else:
+                    print("⚠️  Número inválido.")
+            else:
+                print("⚠️  Entrada inválida.")
+    
+    # Borramos el gasto
+    concepto = conceptos[indice]
+    monto = categoria_dict.pop(concepto)
+    print(f"✅ Gasto '{concepto}' de ${monto:.2f} eliminado exitosamente.")
+
+# Este es el submenú de nuestro programa donde se muestran las opciones después de escoger en el menú principal
 
 def menu_categoria(nombre_categoria, categoria_dict, sueldo):
     """Menú de operaciones para cada categoría"""
@@ -359,10 +389,9 @@ def menu_categoria(nombre_categoria, categoria_dict, sueldo):
         total_gastado = sum(categoria_dict.values())
         disponible = presupuesto_max - total_gastado
         
-        print(f"\n{'='*60}")
+        print(f"\n")
         print(f"📂 {nombre_categoria.upper()} - Presupuesto: ${presupuesto_max:.2f}")
         print(f"   Gastado: ${total_gastado:.2f} | Disponible: ${disponible:.2f}")
-        print(f"{'='*60}")
         print("\nOpciones:")
         print("  a. Agregar gasto")
         print("  b. Consultar gastos")
@@ -389,18 +418,65 @@ def main():
     """Función principal de la aplicación"""
     bienvenida()
     
-    # Solicitar el sueldo
-    while True:
-        try:
-            sueldo = float(input("Para empezar ingrese la cantidad de dinero que posee: $"))
-            if sueldo <= 0:
-                print("⚠️  Por favor ingrese una cantidad mayor a 0.")
-                continue
-            break
-        except ValueError:
-            print("⚠️  Por favor ingrese un monto válido.")
+    # Solicitamos el sueldo
+    sueldo_valido = False
     
-    # Diccionarios para almacenar gastos (concepto: monto)
+    while sueldo_valido == False:
+        sueldo_texto = input("Para empezar ingrese la cantidad de dinero que posee: $").strip()
+        
+        # Verificamos si está vacío
+        if sueldo_texto == "":
+            print("⚠️  Por favor ingrese un monto válido.")
+        else:
+            # Contamos cuántos puntos tiene
+            cantidad_puntos = 0
+            pos_punto = 0
+            
+            while pos_punto < len(sueldo_texto):
+                if sueldo_texto[pos_punto] == '.':
+                    cantidad_puntos = cantidad_puntos + 1
+                pos_punto = pos_punto + 1
+            
+            # Verificamos si tiene más de un punto
+            if cantidad_puntos > 1:
+                print("⚠️  Por favor ingrese un monto válido.")
+            else:
+                # Convertir a lista para que usemos remove
+                lista_caracteres = list(sueldo_texto)
+                
+                # Se quita el punto si existe
+                if '.' in lista_caracteres:
+                    lista_caracteres.remove('.')
+                
+                # Quitar el signo negativo si está al inicio
+                if len(lista_caracteres) > 0 and lista_caracteres[0] == '-':
+                    lista_caracteres.remove('-')
+                
+                # Verificamos que todos sean dígitos
+                if len(lista_caracteres) > 0:
+                    todos_digitos = True
+                    pos = 0
+                    
+                    while pos < len(lista_caracteres) and todos_digitos == True:
+                        if lista_caracteres[pos] not in '0123456789':
+                            todos_digitos = False
+                        pos = pos + 1
+                    
+                    if todos_digitos == True:
+                        sueldo = float(sueldo_texto)
+                        
+                        # Vemos que sea mayor a 0
+                        if sueldo <= 0:
+                            print("⚠️  Por favor ingrese una cantidad mayor a 0.")
+                        else:
+                            sueldo_valido = True
+                    else:
+                        print("⚠️  Por favor ingrese un monto válido.")
+                else:
+                    print("⚠️  Por favor ingrese un monto válido.")
+    
+    # Diccionarios para almacenar los gastos
+    
     necesidades = {}
     deseos = {}
     ahorro = {}
@@ -408,37 +484,64 @@ def main():
     # Menú principal
     while True:
         mostrar_presupuesto(sueldo, necesidades, deseos, ahorro)
-        
+    
         print("MENÚ PRINCIPAL")
-        print("=" * 70)
+        print("\n")
         print("1. 💰 Necesidades Esenciales (vivienda, comida, transporte)")
         print("2. 🎯 Deseos (entretenimiento, gastos personales)")
         print("3. 🏦 Ahorro")
         print("4. 📊 Ver resumen completo")
         print("5. 🚪 Salir")
-        print("=" * 70)
+    
+        seccion_valida = False
+    
+        while seccion_valida == False:
+            seccion_texto = input("\nDigite la sección a la que desea entrar: ").strip()
         
-        try:
-            seccion = int(input("\nDigite la sección a la que desea entrar: "))
-            
-            if seccion == 5:
-                print("\n" + "=" * 70)
-                print("✅ Gracias por usar PapoiMoney. ¡Hasta pronto!")
-                print("=" * 70)
-                break
-            elif seccion == 1:
-                menu_categoria("Necesidades", necesidades, sueldo)
-            elif seccion == 2:
-                menu_categoria("Deseos", deseos, sueldo)
-            elif seccion == 3:
-                menu_categoria("Ahorro", ahorro, sueldo)
-            elif seccion == 4:
-                continue  # El resumen ya se muestra al inicio del bucle
-            else:
-                print("⚠️  Opción no válida. Por favor seleccione 1-5.")
-        except ValueError:
+        # Verificar si está vacío
+        if seccion_texto == "":
             print("⚠️  Por favor ingrese un número válido.")
+        else:
+            # Verificar si todos los caracteres son dígitos
+            es_numero = True
+            posicion = 0
+            
+            while posicion < len(seccion_texto) and es_numero == True:
+                caracter = seccion_texto[posicion]
+                
+                if caracter not in '0123456789':
+                    es_numero = False
+                
+                posicion = posicion + 1
+            
+            if es_numero == True:
+                seccion = int(seccion_texto)
+                
+                # Verificar si está en el rango válido
+                if 1 <= seccion <= 5:
+                    seccion_valida = True
+                else:
+                    print("⚠️  Opción no válida. Por favor seleccione 1-5.")
+            else:
+                print("⚠️  Por favor ingrese un número válido.")
+    
+            # Ejecutar la opción elegida
+        if seccion == 5:
+            print("\n" + "=" * 70)
+            print("✅ Gracias por usar PapoiMoney. ¡Hasta pronto!")
+            print("=" * 70)
+            break
+        elif seccion == 1:
+            menu_categoria("Necesidades", necesidades, sueldo)
+        elif seccion == 2:
+            menu_categoria("Deseos", deseos, sueldo)
+        elif seccion == 3:
+            menu_categoria("Ahorro", ahorro, sueldo)
+        elif seccion == 4:
+        # Cuando el usuario elige 4, simplemente vuelve al inicio del bucle
+        # y mostrar_presupuesto() se ejecuta automáticamente
+            print("\n✅ Mostrando resumen completo...")
 
-# Ejecutar la aplicación
+# Ejecutamos la aplicación
 if __name__ == "__main__":
     main()
