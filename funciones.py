@@ -319,48 +319,65 @@ def modificar_gasto(categoria_dict, nombre_categoria):
     
 def borrar_gasto(categoria_dict, nombre_categoria):
     """Borra un gasto de una categoría"""
+    
+   # Verifica si el diccionario de categoría está vacío
     if len(categoria_dict) == 0:
         print(f"\n⚠️  No hay gastos en {nombre_categoria} para borrar.")
         return
     
+    # Llama a la función para mostrar los gastos disponibles en la categoría
     consultar_gastos(categoria_dict, nombre_categoria)
     
+    # Extrae las claves del diccionario y las convierte en lista
     conceptos = list(categoria_dict.keys())
     
-    # Validamos el índice
+    # Valida para iniciar el bucle
     indice_valido = False
     
+    # Inicia un bucle que se repetirá hasta obtener un índice válido
     while indice_valido == False:
         indice_texto = input("\nDigite el número del gasto a borrar: ").strip()
         
-        # Verificamos si está vacío
+        # Verifica si el usuario ingresó un contenido "vacío"
         if indice_texto == "":
+            # Si lo ingresado no posee caracteres, muestra mensaje
             print("⚠️  Entrada inválida.")
         else:
-            # Vemos si todos los caracteres son dígitos
+            # Verifica que la entrada sean dígitos
             es_numero = True
+            #Inicia con el contador en la posición en cero como referencia
             posicion = 0
             
+            # Corrobora cada caracter de la entrada para validar que sea un dígito
             while posicion < len(indice_texto) and es_numero == True:
                 caracter = indice_texto[posicion]
                 
+             # Descarta que el caracter no sea un dígito del 0 al 9  
                 if caracter not in '0123456789':
-                    es_numero = False
-                
+                    es_numero = False 
+             
+            # Aumenta la posición para verificar el siguiente caracter    
                 posicion = posicion + 1
-            
+             
+            # Verifica si todos los caracteres son dígitos válidos
             if es_numero == True:
+                # Determina el input a número entero y resta 1 para ajustar el índice
                 indice = int(indice_texto) - 1
                 
-                # Por último vemos si el índice está en el rango válido
+                # Por último, verifica si el índice se encuentra en el rango válido de la lista
                 if 0 <= indice < len(conceptos):
-                    indice_valido = True
+                    indice_valido = True # Termina el bucle 
                 else:
+                    # Si el número está fuera de rango, muestra mensaje de error
                     print("⚠️  Número inválido.")
             else:
-                print("⚠️  Entrada inválida.")
+                print("⚠️  Entrada inválida.") # También, muestra mensaje de error si la entrada contiene caracteres no numéricos
     
-    # Borramos el gasto
+   # Obtiene el concepto del gasto usando el índice validado
     concepto = conceptos[indice]
+    
+     # Elimina el gasto del diccionario y guarda el monton en una variable
     monto = categoria_dict.pop(concepto)
+    
+    # Muestra mensaje de confirmación con el concepto y el monto eliminados
     print(f"✅ Gasto '{concepto}' de ${monto:.2f} eliminado exitosamente.")
