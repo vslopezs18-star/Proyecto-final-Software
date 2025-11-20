@@ -76,13 +76,13 @@ def main():
         mostrar_presupuesto(sueldo, necesidades, deseos, ahorro)
     
         print("MENÚ PRINCIPAL")
-        print("=" * 70)
-        print("1. 💰 Necesidades Esenciales (vivienda, comida, transporte)")
-        print("2. 🎯 Deseos (entretenimiento, gastos personales)")
-        print("3. 🏦 Ahorro")
+        print("\n")
+        print("1. 🎯 Necesidades Esenciales (vivienda, comida, transporte)")
+        print("2. 📋 Deseos (entretenimiento, gastos personales)")
+        print("3. 🐷 Ahorro")
         print("4. 📊 Ver resumen completo")
         print("5. 🚪 Salir")
-        print("=" * 70)
+        print("\n")
     
         seccion_valida = False
     
@@ -114,10 +114,10 @@ def main():
                 print("⚠️  Por favor ingrese un número válido.")
     
     # Ejecutar la opción seleccionada
-            if seccion == 5:
-                print("\n" + "=" * 70)
+        if seccion == 5:
+                print("\n")
                 print("✅ Gracias por usar PapoiMoney. ¡Hasta pronto!")
-                print("=" * 70)
+                print("\n")
                 break
     
         if seccion == 1:
