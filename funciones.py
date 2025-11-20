@@ -331,21 +331,21 @@ def borrar_gasto(categoria_dict, nombre_categoria):
     # Extrae las claves del diccionario y las convierte en lista
     conceptos = list(categoria_dict.keys())
     
-    # Valida para iniciar el bucle
+    # Validamos para iniciar el bucle
     indice_valido = False
     
-    # Inicia un bucle que se repetirá hasta obtener un índice válido
+    # Se inicia un bucle que se repetirá hasta obtener un índice válido
     while indice_valido == False:
         indice_texto = input("\nDigite el número del gasto a borrar: ").strip()
         
-        # Verifica si el usuario ingresó un contenido "vacío"
+        # Verificamos si el usuario ingresó un contenido "vacío"
         if indice_texto == "":
             # Si lo ingresado no posee caracteres, muestra mensaje
-            print("⚠️  Entrada inválida.")
+            print("⚠️  Entrada inválida. (Tatata bala tu!)")
         else:
-            # Verifica que la entrada sean dígitos
+            # Verificamos que la entrada sean dígitos
             es_numero = True
-            #Inicia con el contador en la posición en cero como referencia
+            #Iniciamos con el contador en la posición en cero como referencia
             posicion = 0
             
             # Corrobora cada caracter de la entrada para validar que sea un dígito
@@ -371,7 +371,7 @@ def borrar_gasto(categoria_dict, nombre_categoria):
                     # Si el número está fuera de rango, muestra mensaje de error
                     print("⚠️  Número inválido.")
             else:
-                print("⚠️  Entrada inválida.") # También, muestra mensaje de error si la entrada contiene caracteres no numéricos
+                print("⚠️  Entrada inválida. (Tatata bala tu!)") # También, muestra mensaje de error si la entrada contiene caracteres no numéricos
     
    # Obtiene el concepto del gasto usando el índice validado
     concepto = conceptos[indice]

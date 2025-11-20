@@ -16,7 +16,7 @@ def main():
         
         # Verificamos si está vacío
         if sueldo_texto == "":
-            print("⚠️  Por favor ingrese un monto válido.")
+            print("⚠️  Por favor ingrese un monto válido. (Oh poop)")
         else:
             # Contamos cuántos puntos tiene
             cantidad_puntos = 0
@@ -29,7 +29,7 @@ def main():
             
             # Verificamos si tiene más de un punto
             if cantidad_puntos > 1:
-                print("⚠️  Por favor ingrese un monto válido.")
+                print("⚠️  Por favor ingrese un monto válido. (Oh poop)")
             else:
                 # Convertir a lista para que usemos remove
                 lista_caracteres = list(sueldo_texto)
@@ -61,9 +61,9 @@ def main():
                         else:
                             sueldo_valido = True
                     else:
-                        print("⚠️  Por favor ingrese un monto válido.")
+                        print("⚠️  Por favor ingrese un monto válido.  (Oh poop)")
                 else:
-                    print("⚠️  Por favor ingrese un monto válido.")
+                    print("⚠️  Por favor ingrese un monto válido.  (Oh poop)")
     
     # Diccionarios para almacenar los gastos
     
@@ -77,11 +77,11 @@ def main():
     
         print("MENÚ PRINCIPAL")
         print("\n")
-        print("1. 🎯 Necesidades Esenciales (vivienda, comida, transporte)")
-        print("2. 📋 Deseos (entretenimiento, gastos personales)")
-        print("3. 🐷 Ahorro")
-        print("4. 📊 Ver resumen completo")
-        print("5. 🚪 Salir")
+        print("1. 🎯 Necesidades Esenciales (Casa-banana (vivienda), banana (comida), room-room (transporte))")
+        print("2. 📋 Deseos (Baboi (entretenimiento), shoppa-shoppa (compras))")
+        print("3. 🐷 Ahorro (money-bobo)")
+        print("4. 📊 Ver resumen completo (Shorty-banana)")
+        print("5. 🚪 Salir (Pado)")
         print("\n")
     
         seccion_valida = False
@@ -89,11 +89,11 @@ def main():
         while seccion_valida == False:
             seccion_texto = input("\nDigite la sección a la que desea entrar: ").strip()
         
-        # Verificar si está vacío
+        # Verificamos si está vacío
             if seccion_texto == "":
-                print("⚠️  Por favor ingrese un número válido.")
+                print("⚠️  Por favor ingrese un número válido. (Oh poop)")
             else:
-            # Verificar si todos los caracteres son dígitos
+            # Verificamos si todos los caracteres son dígitos
                 es_numero = True
                 posicion = 0
             
@@ -105,18 +105,18 @@ def main():
             if es_numero == True:
                 seccion = int(seccion_texto)
                 
-                # Verificar si está en el rango válido (1-5)
+                # Vemos si está en el rango válido (1-5)
                 if 1 <= seccion <= 5:
                     seccion_valida = True
                 else:
-                    print("⚠️  Opción no válida. Por favor seleccione 1-5.")
+                    print("⚠️  Opción no válida. Por favor seleccione 1-5. (Stupa! Stupa!)")
             else:
-                print("⚠️  Por favor ingrese un número válido.")
+                print("⚠️  Por favor ingrese un número válido. (Oh poop)")
     
-    # Ejecutar la opción seleccionada
+    # Luego se ejecuta la opción seleccionada
         if seccion == 5:
                 print("\n")
-                print("✅ Gracias por usar PapoiMoney. ¡Hasta pronto!")
+                print("✅ Gracias por usar PapoiMoney. ¡Hasta pronto! (POOPAYE! TULALILOO TI AMOO!)")
                 print("\n")
                 break
     
