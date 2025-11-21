@@ -116,7 +116,7 @@ def main():
     # Luego se ejecuta la opción seleccionada
         if seccion == 5:
                 print("\n")
-                print("✅ Gracias por usar PapoiMoney. ¡Hasta pronto! (POOPAYE! TULALILOO TI AMOO!)")
+                print("✅ Gracias por usar PapoiMoney. ¡Hasta pronto! (POOPAYE! TULALILOO TI AMOO! BANANA-BYEE)")
                 print("\n")
                 break
     
