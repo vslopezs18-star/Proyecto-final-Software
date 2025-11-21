@@ -28,7 +28,7 @@ def menu_categoria(nombre_categoria, categoria_dict, sueldo):
         print("\nOpciones:")
         print("  a. Agregar gasto (banana-spend)💲")
         print("  b. Consultar gastos (moni-moni check) 💰")
-        print("  c. Modificar gasto (moni-mudi) ✍🏻")
+        print("  c. Modificar gasto (moni-mudi) 📝")
         print("  d. Borrar gasto (Sa la ka!) 🗑️")
         print("  e. Volver al menú principal (Papoi) 🏡")
         
